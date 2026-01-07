@@ -1,0 +1,159 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v6.2.json",
+  "description": "custom horizon chart of Malware Trend by Family",
+  "width": 800,
+  "height": 500,
+  "autosize": "pad",
+  "padding": {"top": 5, "bottom": 5, "left": 15, "right": 5},
+
+  "data": [
+    {
+      "name": "table",
+      "url": {"index": "malware_trend", "body": {"size": 1000}},
+      "format": {"type": "json", "property": "hits.hits","parse": {"month": "date"}},
+        "transform": [
+          { "type": "formula", "expr": "datum._source.family","as": "family"},
+          {"type": "formula","expr": "datum._source.amount","as": "amount"},
+          {"type": "formula", "expr": "datum._source.month", "as": "month_time"},
+          {
+            "type":"timeunit",
+            "field":"month_time",
+            "units": ["year", "month"]
+          }                      
+        ]
+    },
+    {
+      "name": "max_amount",
+      "source": "table",
+      "transform": [
+        { "type": "aggregate", "fields": ["amount"], "ops": ["max"], "as": ["value"] }
+      ]
+  }   
+  ],
+  "signals": [
+    { "name": "size", "value": 1 },
+    { "name": "domainMax", "update": "(data('max_amount')[0] ? +data('max_amount')[0].value : 0)" },
+    { "name": "bandwidth", "value": 0.0005 },
+    {
+      "name": "interpolate",
+      "value": "monotone",
+      "bind": {
+        "input": "select",
+        "options": [
+          "basis",
+          "cardinal",
+          "catmull-rom",
+          "linear",
+          "monotone",
+          "natural",
+          "step",
+          "step-after",
+          "step-before"
+        ]
+      }
+    },
+    {
+      "name": "colorScheme",
+      "value": "category10",
+      "bind": {
+        "input": "select",
+        "options": [
+          "category10",
+          "category20",
+          "category20b",
+          "category20c",
+          "spectral",
+          "cividis",
+          "plasma",
+          "inferno",
+          "magma"
+        ]
+      }
+    },
+  ],
+  "scales": [
+    {
+      "name": "xscale",
+      "type": "time",
+      "domain": {"data": "table", "field": "month"},
+      "range": "width"
+    },
+    {
+      "name": "yscale",
+      "type": "band",
+      "round": true,
+      "padding": 0,
+      "domain": { "data": "table", "field":"family"},
+      "range": "height"
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": {"data": "table", "field": "family"},
+      "range": {"scheme": {"signal" : "colorScheme"}}
+    }
+  ],
+
+  "axes": [
+    {"orient": "bottom", "scale": "xscale", "domain": false, "title": "Monthly", "format": "%Y-%m", "labelAngle":-60, "labelPadding":20 },
+    { "orient": "left", "scale": "yscale", "tickSize":0,"labelPadding":5,"labelFont":"monospace","labelFontSize":15,"labelFontWeight":"bold","labelFontStyle": "italic","labelAlign": "right" }
+  ],
+
+  "marks": [
+    {
+      "type": "group",
+      "from": {
+        "facet": {
+          "name": "family_series",
+          "data": "table",
+          "groupby": "family"
+        }
+      },
+      "encode": {
+        "update": {
+          "y": {"scale": "yscale", "field": "family"},
+          "width": {"signal": "width"},
+          "height": {"scale": "yscale", "band": 1}
+        }
+      },
+      "signals": [
+        {"name": "bandheight", "update": "bandwidth('yscale')"}
+      ],
+      "scales": [
+        {
+          "name": "yinner",
+          "type": "linear",
+          "range": [{"signal": "bandheight"}, {"signal": "0 - size * bandheight"}],
+          "domain": [0, {"signal": "domainMax"}]
+        }
+      ],
+      "marks": [
+        {
+          "type": "area",
+          "tooltip": true,
+          "from": {"data": "family_series"},
+          "encode": {
+            "enter": {
+              "x": {"scale": "xscale", "field": "month"},
+              "y": {"scale": "yinner", "field": "amount"},
+              "y2": {"scale": "yinner", "value": 0},
+              "stroke": {"value": "white"},
+              "strokeWidth": {"value": 1}
+            },
+            "update": {
+              "fill": {"scale": "color", "field": "family"},
+              "fillOpacity": {"value": 0.7},
+              "interpolate": {"signal": "interpolate"},
+              "tooltip": {
+                "signal": "{'family': datum.family, 'month': timeFormat(datum.month, '%Y-%m'),'amount': format(datum.amount, ',.2f')}"
+              }
+            },
+            "hover": {
+              "fillOpacity": {"value": 1}
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

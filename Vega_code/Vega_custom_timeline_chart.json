@@ -1,0 +1,194 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v6.2.json",
+  "description": "custom timeline visualization of sample FQDN and assigned IP",
+  "width": 1000,
+  "height": 300,
+  "padding": 5,
+
+  "data": [
+      {
+        "name": "fqdn_ip",
+        "values": [
+      {
+          "fqdn_domain": "example1.com",
+          "ipaddr": "192.168.1.1",
+          "domain_born": 1711897200000,
+          "ip_used_start": 1712070000000,
+          "ip_used_end": 1712502000000,
+          "domain_died": 1713970800000
+      },
+      {
+          "fqdn_domain": "example1.com",
+          "ipaddr": "192.168.1.2",
+          "domain_born": 1711897200000,
+          "ip_used_start": 1712674800000,
+          "ip_used_end": 1712847600000,
+          "domain_died": 1713970800000
+      },
+      {
+          "fqdn_domain": "example1.com",
+          "ipaddr": "192.168.1.3",
+          "domain_born": 1711897200000,
+          "ip_used_start": 1713106800000,
+          "ip_used_end": 1713711600000,
+          "domain_died": 1713970800000
+      },
+      {
+          "fqdn_domain": "example2.com",
+          "ipaddr": "192.168.2.1",
+          "domain_born": 1713106800000,
+          "ip_used_start": 1713279600000,
+          "ip_used_end": 1714489200000,
+          "domain_died": 1716822000000
+      },
+      {
+          "fqdn_domain": "example2.com",
+          "ipaddr": "192.168.2.2",
+          "domain_born": 1713106800000,
+          "ip_used_start": 1714834800000,
+          "ip_used_end": 1716735600000,
+          "domain_died": 1716822000000
+      },
+      {
+          "fqdn_domain": "example3.com",
+          "ipaddr": "192.168.3.1",
+          "domain_born": 1717167600000,
+          "ip_used_start": 1717340400000,
+          "ip_used_end": 1717513200000,
+          "domain_died": 1719673200000
+      },
+      {
+          "fqdn_domain": "example3.com",
+          "ipaddr": "192.168.3.2",
+          "domain_born": 1717167600000,
+          "ip_used_start": 1717945200000,
+          "ip_used_end": 1718031600000,
+          "domain_died": 1719673200000
+      },
+      {
+          "fqdn_domain": "example3.com",
+          "ipaddr": "192.168.3.3",
+          "domain_born": 1717167600000,
+          "ip_used_start": 1719154800000,
+          "ip_used_end": 1719586800000,
+          "domain_died": 1719673200000
+      }
+    ]
+    },
+    {
+      "name": "events",
+      "format": {"type":"json", "parse":{"when":"date"}},
+      "values": [
+        { "name":"Attack Campaign", "when":"May 5, 2024" },
+        { "name":"Takedown Operation", "when":"5/28/2024" }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "xscale",
+      "type": "time",
+      "range": "width",
+      "domain": {"data": "fqdn_ip", "fields": ["domain_born", "domain_died"]}
+    },
+    {
+      "name": "yscale",
+      "type": "band",
+      "range": [0, {"signal": "height"}],
+      "domain": {"data": "fqdn_ip", "field": "fqdn_domain"}
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": {"data": "fqdn_ip", "field": "ipaddr"},
+      "range": {"scheme": "category20"}
+    },
+  ],
+
+  "axes": [
+    {"orient": "bottom", "scale": "xscale", "format": "%Y/%m/%d"}
+  ],
+
+  "marks": [
+    {
+      "type": "text",
+      "from": {"data": "events"},
+      "encode": {
+        "enter": {
+          "x": {"scale": "xscale", "field": "when"},
+          "y": {"value": -10},
+          "angle": {"value": -25},
+          "fill": {"value": "#000"},
+          "text": {"field": "name"},
+          "fontSize": {"value": 15}
+        }
+      }
+    },
+    {
+      "type": "rect",
+      "from": {"data": "events"},
+      "encode": {
+        "enter": {
+          "x": {"scale": "xscale", "field": "when"},
+          "y": {"value": -8},
+          "width": {"value": 1},
+          "height": {"field": {"group": "height"}, "offset": 8},
+          "fill": {"value": "#000"}
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {"data": "fqdn_ip"},
+      "encode": {
+        "enter": {
+          "x": {"scale": "xscale", "field": "domain_born"},
+          "y": {"scale": "yscale", "field": "fqdn_domain", "offset": -10},
+          "fill": {"value": "#000"},
+          "text": {"field": "fqdn_domain"},
+          "fontSize": {"value": 20}
+        }
+      }
+    },
+    {
+      "type": "rect",
+      "from": {"data": "fqdn_ip"},
+      "encode": {
+        "enter": {
+          "x": {"scale": "xscale", "field": "domain_born"},
+          "x2": {"scale": "xscale", "field": "domain_died"},
+          "y": {"scale": "yscale", "field": "fqdn_domain"},
+          "height": {"value": 6},
+          "fill": {"value": "#557"}
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {"data": "fqdn_ip"},
+      "encode": {
+        "enter": {
+          "x": {"scale": "xscale", "field": "ip_used_start"},
+          "x2": {"scale": "xscale", "field": "ip_used_end"},
+          "y": {"scale": "yscale", "field": "fqdn_domain", "offset": 20},
+          "fill": {"value": "#000"},
+          "text": {"field": "ipaddr"},
+          "fontSize": {"value": 10}
+        }
+      }
+    },    
+    {
+      "type": "rect",
+      "from": {"data": "fqdn_ip"},
+      "encode": {
+        "enter": {
+          "x": {"scale": "xscale", "field": "ip_used_start"},
+          "x2": {"scale": "xscale", "field": "ip_used_end"},
+          "y": {"scale": "yscale", "field": "fqdn_domain", "offset":-1},
+          "height": {"value": 8},
+          "fill": {"scale": "color", "field": "ipaddr"}
+        }
+      }
+    }
+  ]
+}

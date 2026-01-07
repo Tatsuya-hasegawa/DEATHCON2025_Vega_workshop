@@ -1,0 +1,8 @@
+{"fqdn_domain": "example1.com", "ipaddr": "192.168.1.1", "domain_born": 1711897200000, "ip_used_start": 1712070000000, "ip_used_end": 1712502000000, "domain_died": 1713970800000}
+{"fqdn_domain": "example1.com", "ipaddr": "192.168.1.2", "domain_born": 1711897200000, "ip_used_start": 1712674800000, "ip_used_end": 1712847600000, "domain_died": 1713970800000}
+{"fqdn_domain": "example1.com", "ipaddr": "192.168.1.3", "domain_born": 1711897200000, "ip_used_start": 1713106800000, "ip_used_end": 1713711600000, "domain_died": 1713970800000}
+{"fqdn_domain": "example2.com", "ipaddr": "192.168.2.1", "domain_born": 1713106800000, "ip_used_start": 1713279600000, "ip_used_end": 1714489200000, "domain_died": 1716822000000}
+{"fqdn_domain": "example2.com", "ipaddr": "192.168.2.2", "domain_born": 1713106800000, "ip_used_start": 1714834800000, "ip_used_end": 1716735600000, "domain_died": 1716822000000}
+{"fqdn_domain": "example3.com", "ipaddr": "192.168.3.1", "domain_born": 1717167600000, "ip_used_start": 1717340400000, "ip_used_end": 1717513200000, "domain_died": 1719673200000}
+{"fqdn_domain": "example3.com", "ipaddr": "192.168.3.2", "domain_born": 1717167600000, "ip_used_start": 1717945200000, "ip_used_end": 1718031600000, "domain_died": 1719673200000}
+{"fqdn_domain": "example3.com", "ipaddr": "192.168.3.3", "domain_born": 1717167600000, "ip_used_start": 1719154800000, "ip_used_end": 1719586800000, "domain_died": 1719673200000}
