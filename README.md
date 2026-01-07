@@ -1,13 +1,13 @@
-## What is DEATHCON 2025?
+## What is DEATHCON 2025? 💀
 
 https://deathcon.io/workshops.html
 
 https://qiita.com/hackeT/items/44b1ba8d7eec54de506e
 
-## Welcome to "Magic of custom Visualizations with Vega, cut out for DEATH work!" workshop
+## Welcome to "Magic of custom Visualizations with Vega, cut out for DEATH work!" workshop📈📊⭐️
 Data visualization has infinite possibilities! Learn Vega to develop two beautiful custom charts making your DEATH work more vivid and implement on Kibana. Let's obtain a custom Timeline of the relationship between malicious domains and their assigned IP, and a custom Horizon for malware trends.
 
-Youtube video: https://youtu.be/gBWPvSw62S0
+Youtube video🎥: https://youtu.be/gBWPvSw62S0
 
 ## Workshop leader (Your Instructor)
 
