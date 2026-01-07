@@ -40,7 +40,8 @@ In addition, it use Web browser software to access online Vega documents, online
 
 ## Attached Vega code files
 
-Vega\ code
+```
+Vega_code
 ├── Vega_custom_horizon_chart.json
 ├── Vega_custom_horizon_chart_kibana.json
 ├── Vega_custom_timeline_chart.json
@@ -49,6 +50,7 @@ Vega\ code
 ├── Vega_tutorial.json
 ├── fqdn_ip_array.ndjson
 └── malware_trend.ndjson
+```
 
 Integrity
 
