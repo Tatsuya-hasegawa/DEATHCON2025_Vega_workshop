@@ -7,6 +7,9 @@ https://qiita.com/hackeT/items/44b1ba8d7eec54de506e
 ## Welcome to "Magic of custom Visualizations with Vega, cut out for DEATH work!" workshop📈📊⭐️
 Data visualization has infinite possibilities! Learn Vega to develop two beautiful custom charts making your DEATH work more vivid and implement on Kibana. Let's obtain a custom Timeline of the relationship between malicious domains and their assigned IP, and a custom Horizon for malware trends.
 
+<img width="1462" height="824" alt="deathcon_top2_white" src="https://github.com/user-attachments/assets/3971eaf0-c9a1-4776-b0c6-773a98b690bd" />
+
+
 Youtube video🎥: https://youtu.be/gBWPvSw62S0
 
 ## Workshop leader (Your Instructor)
